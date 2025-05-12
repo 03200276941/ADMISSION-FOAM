@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BK Global International School - Admission Form</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-light: #3b82f6;
+            --primary-dark: #1d4ed8;
+            --whatsapp: #25D366;
+            --whatsapp-dark: #128C7E;
+            --success: #10b981;
+            --error: #ef4444;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gray: #94a3b8;
+            --border-radius: 8px;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f1f5f9;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .form-card {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .form-header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .form-header h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-header p {
+            opacity: 0.9;
+        }
+
+        .form-body {
+            padding: 2rem;
+        }
+
+        .form-section {
+            margin-bottom: 2rem;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 1.5rem;
+        }
+
+        .form-section:last-child {
+            border-bottom: none;
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .form-label.required::after {
+            content: ' *';
+            color: var(--error);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--gray);
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+        }
+
+        select.form-control {
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            background-size: 16px;
+        }
+
+        .btn-submit {
+            background: var(--whatsapp);
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            transition: var(--transition);
+            margin-top: 1rem;
+        }
+
+        .btn-submit:hover {
+            background: var(--whatsapp-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .btn-submit i {
+            font-size: 1.2rem;
+        }
+
+        .input-hint {
+            font-size: 0.8rem;
+            color: var(--gray);
+            margin-top: 0.25rem;
+        }
+
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-header {
+                padding: 1.5rem;
+            }
+            
+            .form-body {
+                padding: 1.5rem;
+            }
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .form-section {
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+
+        /* Validation */
+        .error-message {
+            color: var(--error);
+            font-size: 0.8rem;
+            margin-top: 0.25rem;
+            display: none;
+        }
+
+        .error .form-control {
+            border-color: var(--error);
+        }
+
+        .error .error-message {
+            display: block;
+        }
+        
+        /* Conditional fields */
+        .conditional-field {
+            display: none;
+        }
+        
+        .conditional-field.show {
+            display: block;
+            animation: fadeIn 0.3s ease-out;
+        }
+        .print-button {
+    background-color: #4CAF50; /* Green background */
+    color: white; /* White text */
+    padding: 10px 20px; /* Padding around text */
+    text-align: center; /* Center the text */
+    text-decoration: none; /* Remove underline */
+    display: inline-block; /* Inline block for button-like appearance */
+    font-size: 16px; /* Font size */
+    margin: 10px 0; /* Margin for spacing */
+    border-radius: 5px; /* Rounded corners */
+    border: none; /* Remove border */
+    cursor: pointer; /* Pointer cursor on hover */
+}
+
+.print-button:hover {
+    background-color: #45a049; /* Darker green on hover */
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="form-card">
+            <div class="form-header">
+                <h1>BK Global International School</h1>
+                <p>Admission Application Form</p>
+            </div>
+
+            <div class="form-body">
+                <form id="admissionForm">
+                    <!-- Student Information -->
+                    <div class="form-section">
+                        <h2 class="section-title">
+                            <i class="fas fa-user-graduate"></i> Student Information
+                        </h2>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="fullName" class="form-label required">Full Name</label>
+                                <input type="text" id="fullName" name="fullName" class="form-control" required>
+                                <div class="error-message">Please enter student's full name</div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="dob" class="form-label required">Date of Birth</label>
+                                <input type="date" id="dob" name="dob" class="form-control" required>
+                                <div class="error-message">Please select date of birth</div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="gender" class="form-label required">Gender</label>
+                                <select id="gender" name="gender" class="form-control" required>
+                                    <option value="">Select Gender</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                                <div class="error-message">Please select gender</div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="nationality" class="form-label required">Nationality</label>
+                                <select id="nationality" name="nationality" class="form-control" required>
+                                    <option value="">Select Nationality</option>
+                                    <option value="Pakistani">Pakistani</option>
+                                    <option value="Indian">Indian</option>
+                                    <option value="Afghan">Afghan</option>
+                                    <option value="Bangladeshi">Bangladeshi</option>
+                                </select>
+                                <div class="error-message">Please select nationality</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Religious Information -->
+                    <div class="form-section">
+                        <h2 class="section-title">
+                            <i class="fas fa-mosque"></i> Religious Information
+                        </h2>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="religion" class="form-label required">Religion</label>
+                                <select id="religion" name="religion" class="form-control" required>
+                                    <option value="">Select Religion</option>
+                             <option value="Islam">Muslim</option>
+                       <option value="Christianity">Non-Muslim</option>
+
+                   
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                            
+                            <!-- Islamic Denominations (shown only when Islam is selected) -->
+                            <div id="islamDenominationGroup" class="form-group conditional-field">
+                                <label for="islamDenomination" class="form-label required">Islamic Denomination</label>
+                                <select id="islamDenomination" name="islamDenomination" class="form-control">
+                                    <option value="">Select Denomination</option>
+                                    <option value="Sunni">Sunni</option>
+                                    <option value="Shia">Shia</option>
+                                    <option value="Deobandi">Deobandi</option>
+                                    <option value="Ahl-e-Hadith">Ahl-e-Hadith</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                                <div class="error-message">Please select Islamic denomination</div>
+                            </div>
+                            
+                            <!-- Sunni Subgroups (shown only when Sunni is selected) -->
+                            <div id="sunniSubgroupGroup" class="form-group conditional-field">
+                                <label for="sunniSubgroup" class="form-label">Sunni Subgroup</label>
+                                <select id="sunniSubgroup" name="sunniSubgroup" class="form-control">
+                                    <option value="">Select if applicable</option>
+                                    <option value="Barelvi">Barelvi</option>
+                                    <option value="Barkati">Barkati</option>
+                                    <option value="Qadri">Qadri</option>
+                                    <option value="Naqshbandi">Naqshbandi</option>
+                                    <option value="Chishti">Chishti</option>
+                                    <option value="Suharwardi">Suharwardi</option>
+                                    <option value="None">None specific</option>
+                                </select>
+                            </div>
+                            
+                            <!-- Shia Subgroups (shown only when Shia is selected) -->
+                            <div id="shiaSubgroupGroup" class="form-group conditional-field">
+                                <label for="shiaSubgroup" class="form-label">Shia Subgroup</label>
+                                <select id="shiaSubgroup" name="shiaSubgroup" class="form-control">
+                                    <option value="">Select if applicable</option>
+                                    <option value="Twelver">Twelver (Ithna Ashari)</option>
+                                    <option value="Ismaili">Ismaili</option>
+                                    <option value="Zaidi">Zaidi</option>
+                                    <option value="Bohra">Bohra</option>
+                                    <option value="None">None specific</option>
+                                </select>
+                            </div>
+                            
+                            <!-- Deobandi Subgroups (shown only when Deobandi is selected) -->
+                            <div id="deobandiSubgroupGroup" class="form-group conditional-field">
+                                <label for="deobandiSubgroup" class="form-label">Deobandi Subgroup</label>
+                                <select id="deobandiSubgroup" name="deobandiSubgroup" class="form-control">
+                                    <option value="">Select if applicable</option>
+                                    <option value="Jamaat-e-Islami">Jamaat-e-Islami</option>
+                                    <option value="Tablighi Jamaat">Tablighi Jamaat</option>
+                                    <option value="None">None specific</option>
+                                </select>
+                            </div>
+                            
+                            <!-- Other Religion Specification -->
+                            <div id="otherReligionGroup" class="form-group conditional-field">
+                                <label for="otherReligionSpecify" class="form-label required">Please Specify</label>
+                                <input type="text" id="otherReligionSpecify" name="otherReligionSpecify" class="form-control">
+                                <div class="error-message">Please specify your religion</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Parent Information -->
+                    <div class="form-section">
+                        <h2 class="section-title">
+                            <i class="fas fa-users"></i> Parent Information
+                        </h2>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="fatherName" class="form-label required">Father's Name</label>
+                                <input type="text" id="fatherName" name="fatherName" class="form-control" required>
+                                <div class="error-message">Please enter father's name</div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="fatherContact" class="form-label required">Father's WhatsApp Number</label>
+                                <input type="tel" id="fatherContact" name="fatherContact" class="form-control" required>
+                                <div class="input-hint">Include country code (e.g. +92XXXXXXXXXX)</div>
+                                <div class="error-message">Please enter valid WhatsApp number</div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="motherName" class="form-label required">Mother's Name</label>
+                                <input type="text" id="motherName" name="motherName" class="form-control" required>
+                                <div class="error-message">Please enter mother's name</div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="motherContact" class="form-label">Mother's Contact Number</label>
+                                <input type="tel" id="motherContact" name="motherContact" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Academic Information -->
+                    <div class="form-section">
+                        <h2 class="section-title">
+                            <i class="fas fa-book-open"></i> Academic Information
+                        </h2>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="classApplying" class="form-label required">Class Applying For</label>
+                                <select id="classApplying" name="classApplying" class="form-control" required>
+                                    <option value="">Select Class</option>
+                                    <option value="Nursery">Nursery</option>
+                                    <option value="KG">KG</option>
+                                    <option value="Grade 1">Grade 1</option>
+                                    <option value="Grade 2">Grade 2</option>
+                                    <option value="Grade 3">Grade 3</option>
+                                    <option value="Grade 4">Grade 4</option>
+                                    <option value="Grade 5">Grade 5</option>
+                                    <option value="Grade 6">Grade 6</option>
+                                    <option value="Grade 7">Grade 7</option>
+                                    <option value="Grade 8">Grade 8</option>
+                                    <option value="Grade 9">Grade 9</option>
+                                    <option value="Grade 10">Grade 10</option>
+                                </select>
+                                <div class="error-message">Please select class</div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="previousSchool" class="form-label">Previous School (if any)</label>
+                                <input type="text" id="previousSchool" name="previousSchool" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn-submit">
+                        <i class="fab fa-whatsapp"></i> Submit via WhatsApp
+                    </button>
+                    <button type="button" id="printButton" class="print-button">Print Form</button>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+   <script>
+document.addEventListener('DOMContentLoaded', function () {
+    const form = document.getElementById('admissionForm');
+    const religionSelect = document.getElementById('religion');
+    const islamDenominationGroup = document.getElementById('islamDenominationGroup');
+    const islamDenominationSelect = document.getElementById('islamDenomination');
+    const sunniSubgroupGroup = document.getElementById('sunniSubgroupGroup');
+    const shiaSubgroupGroup = document.getElementById('shiaSubgroupGroup');
+    const deobandiSubgroupGroup = document.getElementById('deobandiSubgroupGroup');
+    const otherReligionGroup = document.getElementById('otherReligionGroup');
+    const printButton = document.getElementById('printButton');
+
+    // Hide all subgroups
+    function hideAllSubGroups() {
+        islamDenominationGroup.classList.remove('show');
+        sunniSubgroupGroup.classList.remove('show');
+        shiaSubgroupGroup.classList.remove('show');
+        deobandiSubgroupGroup.classList.remove('show');
+        otherReligionGroup.classList.remove('show');
+    }
+
+    // Handle Religion change
+    religionSelect.addEventListener('change', function () {
+        const religion = religionSelect.value;
+        hideAllSubGroups();
+
+        if (religion === 'Islam') {
+            islamDenominationGroup.classList.add('show');
+        } else if (religion === 'Other') {
+            otherReligionGroup.classList.add('show');
+        }
+    });
+
+    // Handle Islamic Denomination change
+    islamDenominationSelect.addEventListener('change', function () {
+        const denomination = islamDenominationSelect.value;
+        sunniSubgroupGroup.classList.remove('show');
+        shiaSubgroupGroup.classList.remove('show');
+        deobandiSubgroupGroup.classList.remove('show');
+
+        if (denomination === 'Sunni') {
+            sunniSubgroupGroup.classList.add('show');
+        } else if (denomination === 'Shia') {
+            shiaSubgroupGroup.classList.add('show');
+        } else if (denomination === 'Deobandi') {
+            deobandiSubgroupGroup.classList.add('show');
+        }
+    });
+
+    // Handle form submit
+    form.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        // Collect form data
+        const formData = new FormData(form);
+        const entries = Object.fromEntries(formData.entries());
+
+        // Format message
+        let message = `*BK Global International School Admission Form*\n\n`;
+        message += `*Student Information:*\n`;
+        message += `• Full Name: ${entries.fullName}\n`;
+        message += `• Date of Birth: ${entries.dob}\n`;
+        message += `• Gender: ${entries.gender}\n`;
+        message += `• Nationality: ${entries.nationality}\n\n`;
+
+        message += `*Religious Information:*\n`;
+        message += `• Religion: ${entries.religion}\n`;
+
+        if (entries.religion === 'Islam') {
+            message += `• Islamic Denomination: ${entries.islamDenomination}\n`;
+
+            if (entries.islamDenomination === 'Sunni' && entries.sunniSubgroup)
+                message += `• Sunni Subgroup: ${entries.sunniSubgroup}\n`;
+
+            if (entries.islamDenomination === 'Shia' && entries.shiaSubgroup)
+                message += `• Shia Subgroup: ${entries.shiaSubgroup}\n`;
+
+            if (entries.islamDenomination === 'Deobandi' && entries.deobandiSubgroup)
+                message += `• Deobandi Subgroup: ${entries.deobandiSubgroup}\n`;
+        }
+
+        if (entries.religion === 'Other' && entries.otherReligionSpecify) {
+            message += `• Specified Religion: ${entries.otherReligionSpecify}\n`;
+        }
+
+        message += `\n*Parent Information:*\n`;
+        message += `• Father's Name: ${entries.fatherName}\n`;
+        message += `• Father's WhatsApp: ${entries.fatherContact}\n`;
+        message += `• Mother's Name: ${entries.motherName}\n`;
+        if (entries.motherContact)
+            message += `• Mother's Contact: ${entries.motherContact}\n`;
+
+        message += `\n*Academic Information:*\n`;
+        message += `• Class Applying For: ${entries.classApplying}\n`;
+        if (entries.previousSchool)
+            message += `• Previous School: ${entries.previousSchool}\n`;
+
+        // WhatsApp API Link
+        const phone = entries.fatherContact.replace(/\s+/g, '');
+        const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+        window.open(url, '_blank');
+    });
+
+    // Print function
+    printButton.addEventListener('click', function () {
+        const formData = new FormData(form);
+        const entries = Object.fromEntries(formData.entries());
+
+        // Format printable content
+        let printContent = `<h2>BK Global International School Admission Form</h2>`;
+        printContent += `<h3>Student Information:</h3>`;
+        printContent += `<p>Full Name: ${entries.fullName}</p>`;
+        printContent += `<p>Date of Birth: ${entries.dob}</p>`;
+        printContent += `<p>Gender: ${entries.gender}</p>`;
+        printContent += `<p>Nationality: ${entries.nationality}</p>`;
+
+        printContent += `<h3>Religious Information:</h3>`;
+        printContent += `<p>Religion: ${entries.religion}</p>`;
+
+        if (entries.religion === 'Islam') {
+            printContent += `<p>Islamic Denomination: ${entries.islamDenomination}</p>`;
+            if (entries.islamDenomination === 'Sunni' && entries.sunniSubgroup)
+                printContent += `<p>Sunni Subgroup: ${entries.sunniSubgroup}</p>`;
+            if (entries.islamDenomination === 'Shia' && entries.shiaSubgroup)
+                printContent += `<p>Shia Subgroup: ${entries.shiaSubgroup}</p>`;
+            if (entries.islamDenomination === 'Deobandi' && entries.deobandiSubgroup)
+                printContent += `<p>Deobandi Subgroup: ${entries.deobandiSubgroup}</p>`;
+        }
+
+        if (entries.religion === 'Other' && entries.otherReligionSpecify) {
+            printContent += `<p>Specified Religion: ${entries.otherReligionSpecify}</p>`;
+        }
+
+        printContent += `<h3>Parent Information:</h3>`;
+        printContent += `<p>Father's Name: ${entries.fatherName}</p>`;
+        printContent += `<p>Father's WhatsApp: ${entries.fatherContact}</p>`;
+        printContent += `<p>Mother's Name: ${entries.motherName}</p>`;
+        if (entries.motherContact)
+            printContent += `<p>Mother's Contact: ${entries.motherContact}</p>`;
+
+        printContent += `<h3>Academic Information:</h3>`;
+        printContent += `<p>Class Applying For: ${entries.classApplying}</p>`;
+        if (entries.previousSchool)
+            printContent += `<p>Previous School: ${entries.previousSchool}</p>`;
+
+        // Open print dialog
+        const printWindow = window.open('', '', 'height=500, width=800');
+        printWindow.document.write(printContent);
+        printWindow.document.close();
+        printWindow.print();
+    });
+});
+</script>
+
+</body>
+</html>
